@@ -8,7 +8,7 @@ class P7Manager{
 	public function __construct($pathBase, $pathDestinazione){
 		$this -> FOLDER = base_path().$pathBase;
 		$this -> DESTINATIONFOLDER = base_path().$pathDestinazione;
-	}
+	} 
 	public function extract($file, $save=1){
 
 		$filePath = $this -> FOLDER.'/'.$file;

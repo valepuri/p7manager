@@ -6,7 +6,7 @@
     "keywords": ["p7m", "firma digitale"],
     "require": {
         "php": ">=5.4",
-        "valepuri/p7manager": "^1.0"
+        "valepuri/p7manager": "dev-master"
     },
     "authors": [
         {

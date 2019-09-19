@@ -1,0 +1,25 @@
+{
+    "name": "valepuri/p7manager",
+    "description": "Verifica ed estrae file p7m",
+    "type": "library",
+    "homepage": "https://github.com/valepuri/p7manager.git",
+    "keywords": ["log","logging"],
+    "require": {
+        "php": ">=5.4"
+    },
+    "authors": [
+        {
+            "name": "Valerio Purificato",
+            "email": "valeriopurificato.jobs@gmail.com"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "src"
+        ],
+        "psr-4": {
+            "Valepuri\\P7Manager\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

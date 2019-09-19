@@ -10,7 +10,7 @@
 $P7M = new P7Manager('/cartellaFileP7M', 'cartellaFilePdfEstratto');
 $check = $P7M -> extract(nomeDelFileP7M(stringa), Save(int 1/0));
 
-#esempio che oltra la verifica, salvarà il file sul server
+#esempio che oltre la verifica, salverà il file sul server
 
 $P7M = new P7Manager('/P7M', '/PDFESTRATTI');
 $check = $P7M -> extract('miofile.pdf.p7m', 1);

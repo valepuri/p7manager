@@ -9,19 +9,6 @@ class P7Manager{
 		$this -> FOLDER = base_path().$pathBase;
 		$this -> DESTINATIONFOLDER = base_path().$pathDestinazione;
 	}
-
-    /*
-    PASSANDO IL SAVE = 1 IL FILE VIENE SALVATO, 
-    CON SAVE = 0, IL FILE VIENE SOLO VERIFICATO 
-    */
-
-    /*** 
-    RETURN TRUE SE VIENE VERIFICATO, 
-    RETURN IL FILE DI DESTINAZIONE SE VIENE SALVATO, 
-    RETURN FALSE SE NON VIENE VERIFICATO
-    ***/
-
-
 	public function extract($file, $save=1){
 
 		$filePath = $this -> FOLDER.'/'.$file;

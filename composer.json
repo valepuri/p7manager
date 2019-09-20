@@ -5,7 +5,7 @@
     "homepage": "https://github.com/valepuri/p7manager.git",
     "keywords": ["log","logging"],
     "require": {
-        "php": ">=5.4"
+        "php": ">=5.0"
     },
     "authors": [
         {

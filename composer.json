@@ -3,7 +3,7 @@
     "description": "Verifica ed estrae file p7m",
     "type": "library",
     "homepage": "https://github.com/valepuri/p7manager.git",
-    "keywords": ["log","logging"],
+    "keywords": ["p7m", "firma digitale"],
     "require": {
         "php": ">=5.0"
     },

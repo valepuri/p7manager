@@ -1,5 +1,7 @@
 <?php 
 
+use DB;
+
 class P7Manager{
 
 	public $FOLDER = NULL;
@@ -8,7 +10,8 @@ class P7Manager{
 	public function __construct($pathBase, $pathDestinazione){
 		$this -> FOLDER = base_path().$pathBase;
 		$this -> DESTINATIONFOLDER = base_path().$pathDestinazione;
-	} 
+	}
+
 	public function extract($file, $save=1){
 
 		$filePath = $this -> FOLDER.'/'.$file;
@@ -29,13 +32,24 @@ class P7Manager{
 		if($STRINGOUTPUT > 2){
 			if($save < 1){
 				exec('rm '.$destinationPath);
-				return 'TRUE';
+				return TRUE;
 			}else{
 				return $nomePDF;
 			}
 		}else{
-			return 'FALSE';
+			return FALSE;
 		}
+	}
+
+	public function extractInZipFromDB($dbTable, $chiavi = [], $colonna, $folderName=NULL){
+		//$chiavi = ["COLONNA" => 'VALORE'];
+
+		$table = DB::table($dbTable);
+		foreach ($chiavi as $key => $value) {
+			$table -> where($key, $value);
+		}
+		$result = $table -> get();
+
 	}
 
 }

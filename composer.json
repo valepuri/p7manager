@@ -3,10 +3,9 @@
     "description": "Verifica ed estrae file p7m",
     "type": "library",
     "homepage": "https://github.com/valepuri/p7manager.git",
-    "keywords": ["p7m", "firma digitale"],
+    "keywords": ["log","logging"],
     "require": {
-        "php": ">=5.4",
-        "valepuri/p7manager": "dev-master"
+        "php": ">=5.4"
     },
     "authors": [
         {
@@ -22,5 +21,5 @@
             "Valepuri\\P7Manager\\": "src/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }

@@ -8,17 +8,34 @@ use Storage;
 
 class P7Manager{
 
-	public $FOLDER = NULL;
-	public $DESTINATIONFOLDER = NULL;
+	public function getFile($chiavi){
 
-	public function __construct($pathBase, $pathDestinazione){
-		$this -> FOLDER = $pathBase;
-		$this -> DESTINATIONFOLDER = $pathDestinazione;
+		$table = DB::table('PDFEstratti');
+		foreach ($chiavi as $key => $value) {
+			$table -> where($key, $value);
+		}
+		$result = $table -> get();
+
+		$arrRet = [];
+
+		if(count($result) > 0){
+			foreach ($result as $key => $value) {
+				$arrRet[$key]['PDF'] = $value -> PDF_Folder.$value-> PDF;
+				$arrRet[$key]['P7M'] = $value -> P7M_Folder.$value-> P7M;
+			}
+		}else{
+
+			return FALSE;
+
+		}
+
 	}
 
-	public function extractOrVerify($file, $save=1){
+	public function extractOrVerify($pathBase, $pathDestinazione, $file, $save=1){
 
-		$filePath = $this -> FOLDER.'/'.$file;
+		//SE IL SAVE è a 0, fa solo la verifica, altrimenti pure l'estrazione
+
+		$filePath = $pathBase.'/'.$file;
 		$nomeSenzaEstensione = explode('.', $file);
 
 		$nomePDF = 'ESTRATTO_';
@@ -27,13 +44,14 @@ class P7Manager{
 			$nomePDF .= $nomeSenzaEstensione[0].'.pdf';
 		}
 		
-		$destinationPath = $this -> DESTINATIONFOLDER.'/'.$nomePDF;
+		$destinationPath = $pathDestinazione.'/'.$nomePDF;
 		$command = 'openssl smime -verify -in '.base_path().$filePath.' -inform der -out '.
 		base_path().$destinationPath;
 
 		exec($command, $OUTPUTARRAY, $STRINGOUTPUT);
 
-		if($STRINGOUTPUT > 2){
+		$DISCO = Config::get('p7manager.FILESYSTEM_DISK');
+		if(Storage::disk($DISCO)->exists($destinationPath)){
 			if($save < 1){
 				exec('rm '.$destinationPath);
 				return TRUE;
@@ -46,10 +64,9 @@ class P7Manager{
 	}
 
 
-	public function extractAndSaveToDB($chiaviQuery = [], $valoriStaticiDaInserire = [], $file){
+	public function extractAndSaveToDB($pathBase, $pathDestinazione, $chiaviQuery = [], $valoriStaticiDaInserire = [], $file){
 
-		$extract = $this -> extractOrVerify($file);
-
+		$extract = $this -> extractOrVerify($pathBase, $pathDestinazione, $file);
 		$FILEP7M =  $file;
 		$FILEPDF = NULL;
 		if($extract){
@@ -86,10 +103,10 @@ class P7Manager{
 			$ColonnaFilePDF =  Config::get('p7manager.COLONNA_FILE_ESTRATTO');
 
 			$countName = 0;
-			$newName = $nomeZip;
+			$newName = str_slug($nomeZip);
 			//verifica che non esiste la cartella, in caso la crea con il numero progressivo
 			while(Storage::disk($DISCO)->exists('ZIP/'.$newName)){
-				$newName = $nomeZip.'_'.$countName;
+				$newName = str_slug($nomeZip).'_'.$countName;
 				$countName++;
 			}
 			
@@ -124,6 +141,8 @@ class P7Manager{
 			$files = glob('ZIP/'.$newName.'/');
 			Zipper::make('ZIP/'.$newName.'.zip')->add($files);
 			$nomeComleto = $newName.'.zip';
+
+			//Storage::disk($DISCO)->deleteDirectory('ZIP/'.$newName);
 
 			return [
 				"nome" => $newName.'.zip',

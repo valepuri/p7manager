@@ -6,7 +6,7 @@
     "keywords": ["p7m", "firma digitale"],
     "require": {
         "php": ">=5.0",
-        "chumper/zipper": "^0.6.1",
+        "chumper/zipper": "^0.6.1"
     },
     "authors": [
         {

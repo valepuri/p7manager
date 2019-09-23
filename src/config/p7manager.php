@@ -1,11 +1,14 @@
 <?php 
 
-
+//chiave = NOME_COLONNA
+//valore = TIPO_COLONNA
 return [
 	"COLONNEDB" => [
-		"string" => 'RIF_CodiceBando',
-		"string" => 'RIF_CodiceUtente',
-		"string" => 'NomePDF',
-		"integer" => 'Deleted'
-	]
+		"NOME_COLONNA" => "TIPO_COLONNA"
+	],
+	"COLONNA_FOLDER_FILE_DA_ESTRARRE" => "",
+	"COLONNA_FOLDER_FILE_ESTRATTO" => "",
+	"COLONNA_FILE_DA_ESTRARRE" => "",
+	"COLONNA_FILE_ESTRATTO" => "",
+	"FILESYSTEM_DISK" => "",
 ];

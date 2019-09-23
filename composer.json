@@ -5,7 +5,8 @@
     "homepage": "https://github.com/valepuri/p7manager.git",
     "keywords": ["p7m", "firma digitale"],
     "require": {
-        "php": ">=5.0"
+        "php": ">=5.0",
+        "chumper/zipper": "^0.6.1",
     },
     "authors": [
         {
@@ -21,5 +22,5 @@
             "Valepuri\\P7Manager\\": "src/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }

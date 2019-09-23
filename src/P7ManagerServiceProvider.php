@@ -1,5 +1,5 @@
 <?php
-namespace valepuri\p7manager;
+namespace Valepuri\P7manager;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -12,8 +12,8 @@ class P7ManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([__DIR__.'/config/p7manager.php' => config_path('p7manager.php')], 'public');
-       // $this->loadMigrationsFrom(__DIR__.'/migrations');
+        $this->publishes([__DIR__.'/config/p7manager.php' => config_path('p7manager.php')]);
+        $this->publishes([__DIR__.'/migrations/' => database_path('migrations')]);
         /*$this->loadRoutesFrom(__DIR__.'/routes.php');
         
         $this->loadViewsFrom(__DIR__.'/views', 'todolist');

@@ -45,12 +45,13 @@ class P7Manager{
 		}
 		
 		$destinationPath = $pathDestinazione.'/'.$nomePDF;
-		$command = 'openssl smime -verify -in '.base_path().$filePath.' -inform der -out '.
+		$command = 'openssl smime -verify -noverify -in '.base_path().$filePath.' -inform der -out '.
 		base_path().$destinationPath;
 
 		exec($command, $OUTPUTARRAY, $STRINGOUTPUT);
 
 		$DISCO = Config::get('p7manager.FILESYSTEM_DISK');
+
 		if(Storage::disk($DISCO)->exists($destinationPath)){
 			if($save < 1){
 				exec('rm '.$destinationPath);
@@ -122,20 +123,21 @@ class P7Manager{
 				}
 				
 				if(!Storage::disk($DISCO)->exists($directoryAttuale)){
-
 					Storage::disk($DISCO)->makeDirectory($directoryAttuale);
-					$pathP7M = $vr->{$ColonnaFolderFileP7M}.$vr->{$ColonnaFileP7M};
-					$pathPDF = $vr->{$ColonnaFolderFilePDF}.$vr->{$ColonnaFilePDF};
+				}	
 
-					Storage::disk($DISCO)->copy($pathP7M, $directoryAttuale.'/'.$vr->{$ColonnaFileP7M});
-					Storage::disk($DISCO)->copy($pathPDF, $directoryAttuale.'/'.$vr->{$ColonnaFilePDF});
-				}else{
+				$pathP7M = $vr->{$ColonnaFolderFileP7M}.$vr->{$ColonnaFileP7M};
+				$pathPDF = $vr->{$ColonnaFolderFilePDF}.$vr->{$ColonnaFilePDF};
 
-					$pathP7M = $vr->{$ColonnaFolderFileP7M}.$vr->{$ColonnaFileP7M};
-					$pathPDF = $vr->{$ColonnaFolderFilePDF}.$vr->{$ColonnaFilePDF};
-					Storage::disk($DISCO)->copy($pathP7M, $directoryAttuale.'/'.$vr->{$ColonnaFileP7M});
-					Storage::disk($DISCO)->copy($pathPDF, $directoryAttuale.'/'.$vr->{$ColonnaFilePDF});
-				}				
+				if (Storage::disk($DISCO)->exists($directoryAttuale.'/'.$vr->{$ColonnaFileP7M})) {
+					Storage::disk($DISCO)->delete($directoryAttuale.'/'.$vr->{$ColonnaFileP7M});
+				}
+				if (Storage::disk($DISCO)->exists($directoryAttuale.'/'.$vr->{$ColonnaFilePDF})) {
+					Storage::disk($DISCO)->delete($directoryAttuale.'/'.$vr->{$ColonnaFilePDF});
+				}
+
+				Storage::disk($DISCO)->copy($pathP7M, $directoryAttuale.'/'.$vr->{$ColonnaFileP7M});
+				Storage::disk($DISCO)->copy($pathPDF, $directoryAttuale.'/'.$vr->{$ColonnaFilePDF});		
 			}
 
 			$files = glob('ZIP/'.$newName.'/');

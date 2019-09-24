@@ -23,6 +23,7 @@ class P7Manager{
 				$arrRet[$key]['PDF'] = $value -> PDF_Folder.$value-> PDF;
 				$arrRet[$key]['P7M'] = $value -> P7M_Folder.$value-> P7M;
 			}
+			return $arrRet;
 		}else{
 
 			return FALSE;
@@ -47,6 +48,7 @@ class P7Manager{
 		$destinationPath = $pathDestinazione.'/'.$nomePDF;
 		$command = 'openssl smime -verify -noverify -in '.base_path().$filePath.' -inform der -out '.
 		base_path().$destinationPath;
+		//return $command;
 
 		exec($command, $OUTPUTARRAY, $STRINGOUTPUT);
 
@@ -70,7 +72,10 @@ class P7Manager{
 		$extract = $this -> extractOrVerify($pathBase, $pathDestinazione, $file);
 		$FILEP7M =  $file;
 		$FILEPDF = NULL;
+
+		//return $extract;
 		if($extract){
+			
 			$FILEPDF = $extract;
 			//aggiungo ai campi statici quelli dinamici dei file
 			$ColonnaFileP7M =  Config::get('p7manager.COLONNA_FILE_DA_ESTRARRE');
@@ -79,7 +84,6 @@ class P7Manager{
 			$valoriStaticiDaInserire[$ColonnaFilePDF] = $FILEPDF;
 
 			$up = PDFEstratti::updateOrCreate($chiaviQuery, $valoriStaticiDaInserire);
-
 			return TRUE;
 		}else{
 			return FALSE;
